@@ -1,5 +1,6 @@
 package ppkwu.lab4;
 
+import com.google.gson.Gson;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -20,11 +21,15 @@ public class VCardController {
         url += service + "&l=";
 
         Document document = Jsoup.connect(url).get();
-        //System.out.println(document);
+
+        Gson gson = new Gson();
+
         Elements elements = document.select("script");
         for (Element element : elements) {
             if (element.attr("type").equals("application/ld+json")) {
                 System.out.println(element);
+                Contractor contractor = gson.fromJson(element.data(), Contractor.class);
+                System.out.println(contractor);
             }
         }
 
