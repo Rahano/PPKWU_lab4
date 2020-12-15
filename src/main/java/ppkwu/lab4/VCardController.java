@@ -23,13 +23,14 @@ public class VCardController {
         Document document = Jsoup.connect(url).get();
 
         Gson gson = new Gson();
-
+        VCardGenerator vCardGenerator = new VCardGenerator();
         Elements elements = document.select("script");
         for (Element element : elements) {
             if (element.attr("type").equals("application/ld+json")) {
-                System.out.println(element);
+                //System.out.println(element);
                 Contractor contractor = gson.fromJson(element.data(), Contractor.class);
                 System.out.println(contractor);
+                vCardGenerator.generateVCard(contractor);
             }
         }
 
