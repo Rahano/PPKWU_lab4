@@ -29,6 +29,7 @@
             <th data-field="email">email</th>
             <th data-field="sameAs">Link</th>
             <th data-field="address">address</th>
+            <th data-field="VCardButton">getVCard</th>
         </tr>
         </thead>
     </table>

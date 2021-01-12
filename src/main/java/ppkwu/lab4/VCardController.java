@@ -57,6 +57,7 @@ public class VCardController {
         for (Element element : elements) {
             if (element.attr("type").equals("application/ld+json")) {
                 Contractor contractor =  gson.fromJson(element.data(), Contractor.class);
+                contractor.addVCardButton();
                 if(contractor.name != null)
                     contractors.add(contractor);
                 }

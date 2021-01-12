@@ -9,6 +9,7 @@ public class Contractor {
     String email;
     String sameAs;
     Address address;
+    String VCardButton;
 
     @Override public String toString() {
         return "Contractor{"
@@ -26,6 +27,14 @@ public class Contractor {
                + ", address="
                + address
                + '}';
+    }
+    public void addVCardButton(){
+        VCardButton = "<form method=\"post\" action=\"/getVCards\">"
+                 + "<input type=\"hidden\" name=\"name\" value=\""
+                 + name
+                 + "\">"
+                 + "<button type=\"submit\">Download VCard</button>\n"
+                 + "</form>";
     }
 }
 class Address{
