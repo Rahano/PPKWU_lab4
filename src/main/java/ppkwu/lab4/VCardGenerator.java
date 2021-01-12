@@ -28,7 +28,7 @@ public class VCardGenerator {
         vcard.addAddress(adr);
 
         File vcardFile = generateVCardFile(vcard);
-        returnICSFile(response, vcardFile );
+        returnVCFFile(response, vcardFile );
 
     }
     private File generateVCardFile(VCard vcard) throws IOException {
@@ -38,9 +38,9 @@ public class VCardGenerator {
         return vcardFile;
     }
 
-    private void returnICSFile(HttpServletResponse response, File vcard) throws IOException {
+    private void returnVCFFile(HttpServletResponse response, File vcard) throws IOException {
         InputStream inputStream = new FileInputStream(vcard);
-        response.setContentType("text/calendar;charset=utf-8");
+        response.setContentType("text/vcard;charset=utf-8");
         IOUtils.copy(inputStream, response.getOutputStream());
         response.flushBuffer();
     }
