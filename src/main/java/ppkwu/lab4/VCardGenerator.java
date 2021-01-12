@@ -2,10 +2,14 @@ package ppkwu.lab4;
 
 import ezvcard.*;
 import ezvcard.property.Address;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 
 public class VCardGenerator {
 
-    public void generateVCard(Contractor contractor){
+    public void generateVCard(Contractor contractor, HttpServletResponse response) throws IOException {
 
         VCard vcard = new VCard();
 
@@ -23,7 +27,22 @@ public class VCardGenerator {
 
         vcard.addAddress(adr);
 
-        System.out.println(vcard);
+        File vcardFile = generateVCardFile(vcard);
+        returnICSFile(response, vcardFile );
+
+    }
+    private File generateVCardFile(VCard vcard) throws IOException {
+        String name ="VCard.vcf";
+        File vcardFile = new File(name);
+        Ezvcard.write(vcard).version(VCardVersion.V3_0).go(vcardFile);
+        return vcardFile;
+    }
+
+    private void returnICSFile(HttpServletResponse response, File vcard) throws IOException {
+        InputStream inputStream = new FileInputStream(vcard);
+        response.setContentType("text/calendar;charset=utf-8");
+        IOUtils.copy(inputStream, response.getOutputStream());
+        response.flushBuffer();
     }
 
 }

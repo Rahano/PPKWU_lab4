@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
 public class VCardController {
 
     @RequestMapping(path = "/getVCards")
-    public void publishVCards(@RequestParam(value = "service") String service) throws IOException {
+    public void publishVCards(@RequestParam(value = "service") String service, HttpServletResponse response) throws IOException {
 
         String url = "https://panoramafirm.pl/szukaj?k=";
         url += service + "&l=";
@@ -34,7 +35,7 @@ public class VCardController {
                     List<Contractor> contractors = new ArrayList<>();
                     contractors.add(gson.fromJson(element.data(), Contractor.class));
                     System.out.println(contractors.get(0));
-                    vCardGenerator.generateVCard(contractor);
+                    vCardGenerator.generateVCard(contractor, response);
                 }
             }
         }
