@@ -19,7 +19,7 @@ import java.util.List;
 public class VCardController {
 
     @RequestMapping(path = "/getVCards")
-    public void publishVCards(@RequestParam(value = "service") String service, HttpServletResponse response) throws IOException {
+    public void publishVCards(@RequestParam(value = "service") String service, @RequestParam(value = "service") int number, HttpServletResponse response) throws IOException {
 
         String url = "https://panoramafirm.pl/szukaj?k=";
         url += service + "&l=";
@@ -29,17 +29,18 @@ public class VCardController {
         Gson gson = new Gson();
         VCardGenerator vCardGenerator = new VCardGenerator();
         Elements elements = document.select("script");
+        List<Contractor> contractors = new ArrayList<>();
         for (Element element : elements) {
             if (element.attr("type").equals("application/ld+json")) {
                 Contractor contractor =  gson.fromJson(element.data(), Contractor.class);
                 if(contractor.name != null){
-                    List<Contractor> contractors = new ArrayList<>();
                     contractors.add(gson.fromJson(element.data(), Contractor.class));
                     System.out.println(contractors.get(0));
-                    vCardGenerator.generateVCard(contractor, response);
                 }
             }
         }
+        if(contractors.get(number) != null)
+        vCardGenerator.generateVCard(contractors.get(number), response);
     }
     @RequestMapping(path = "/getSite")
     public ModelAndView publishSite(@RequestParam(value = "service") String service, HttpServletResponse response) throws IOException {
@@ -60,7 +61,8 @@ public class VCardController {
                     contractors.add(contractor);
                 }
             }
-        return new ModelAndView("index", "data", contractors);
+        String data = gson.toJson(contractors);
+        return new ModelAndView("index", "string", data);
         }
     }
 

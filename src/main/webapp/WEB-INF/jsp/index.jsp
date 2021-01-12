@@ -13,7 +13,25 @@
 </head>
 <body>
 <div class="container">
-
+    <script>
+        var $table = $('#table');
+        $(function () {
+            $('#table').bootstrapTable({
+                data: ${string}
+            });
+        });
+    </script>
+    <table id="table">
+        <thead>
+        <tr>
+            <th data-field="name">Name</th>
+            <th data-field="telephone">telephone</th>
+            <th data-field="email">email</th>
+            <th data-field="sameAs">Link</th>
+            <th data-field="address">address</th>
+        </tr>
+        </thead>
+    </table>
 </div>
 </body>
 </html>
