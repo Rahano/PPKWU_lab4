@@ -28,13 +28,16 @@ public class Contractor {
                + address
                + '}';
     }
-    public void addVCardButton(){
+    public void addVCardButton(int number, String service){
         VCardButton = "<form method=\"post\" action=\"/getVCards\">"
-                 + "<input type=\"hidden\" name=\"name\" value=\""
-                 + name
-                 + "\">"
-                 + "<button type=\"submit\">Download VCard</button>\n"
-                 + "</form>";
+                      + "<input type=\"hidden\" name=\"service\" value=\""
+                      + service
+                      + "\">"
+                      + "<input type=\"hidden\" name=\"number\" value=\""
+                      + number
+                      + "\">"
+                      + "<button type=\"submit\">Download VCard</button>\n"
+                      + "</form>";
     }
 }
 class Address{

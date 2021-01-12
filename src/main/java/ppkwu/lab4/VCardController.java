@@ -19,7 +19,7 @@ import java.util.List;
 public class VCardController {
 
     @RequestMapping(path = "/getVCards")
-    public void publishVCards(@RequestParam(value = "service") String service, @RequestParam(value = "service") int number, HttpServletResponse response) throws IOException {
+    public void publishVCards(@RequestParam(value = "service") String service, @RequestParam(value = "number") int number, HttpServletResponse response) throws IOException {
 
         String url = "https://panoramafirm.pl/szukaj?k=";
         url += service + "&l=";
@@ -54,13 +54,15 @@ public class VCardController {
         VCardGenerator vCardGenerator = new VCardGenerator();
         Elements elements = document.select("script");
         List<Contractor> contractors = new ArrayList<>();
+        int i = 0;
         for (Element element : elements) {
             if (element.attr("type").equals("application/ld+json")) {
                 Contractor contractor =  gson.fromJson(element.data(), Contractor.class);
-                contractor.addVCardButton();
+                contractor.addVCardButton(i,service);
                 if(contractor.name != null)
                     contractors.add(contractor);
                 }
+            i++;
             }
         String data = gson.toJson(contractors);
         return new ModelAndView("index", "string", data);
