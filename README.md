@@ -21,3 +21,6 @@ Input:
 ``` 
 http://localhost:8080/getSite?service=hydraulik
 ```
+
+Output:
+[Example site](https://rahano.github.io/githubPages/Example.html)
